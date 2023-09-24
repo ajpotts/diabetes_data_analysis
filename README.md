@@ -34,7 +34,7 @@ And unzip the data into this folder:
 > data/diabetes_presence
 
 Download the Readmittance Dataset from here:
-ttps://www.kaggle.com/datasets/sulphatet/diabetes-130us-hospitals-for-years-19992008?select=diabetic_data.csv
+https://www.kaggle.com/datasets/sulphatet/diabetes-130us-hospitals-for-years-19992008?select=diabetic_data.csv
 
 And unzip the data into this folder:
 > data/diabetes_readmittance
