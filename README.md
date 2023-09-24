@@ -56,6 +56,10 @@ The Presence Dataset results will be written here:
 The Readmittance Dataset results will be written here:
 > analysis/diabetes_readmittance
 
+## Citations
 
+Code samples for grid search over cost-complexity parameters:
+
+Joann. (2021, March 25). \emph/{Classification Tree Growing and Pruning with Python Code (Grid Search & Cost-Complexity Function)} Medium.com. https://vzhang1999.medium.com/classification-tree-growing-and-pruning-with-python-code-grid-search-cost-complexity-function-b2e45e33a1a4
 
 
