@@ -29,10 +29,10 @@ def main():
     config_file_diabetes_presence = project_dir + '/diabetes_presence_config.txt'
     model_builder_diabetes_presence = ModelBuilder(X, y, feature_columns, analysis_dir, 'diabetes_presence', config_file_diabetes_presence)
     
-    model_builder_diabetes_presence.decision_tree()
-    model_builder_diabetes_presence.svm()
-    model_builder_diabetes_presence.knn()
-    model_builder_diabetes_presence.boosting()
+    # model_builder_diabetes_presence.decision_tree()
+    # model_builder_diabetes_presence.svm()
+    # model_builder_diabetes_presence.knn()
+    # model_builder_diabetes_presence.boosting()
     model_builder_diabetes_presence.neural_network()
     model_builder_diabetes_presence.write_config()
 
@@ -41,10 +41,10 @@ def main():
      
     config_file_diabetes_readmittance = project_dir + '/diabetes_readmittance_config.txt'
     model_builder_diabetes_readmittance = ModelBuilder(X, y, feature_columns, analysis_dir, 'diabetes_readmittance', config_file_diabetes_readmittance)
-    model_builder_diabetes_readmittance.decision_tree()
-    model_builder_diabetes_readmittance.svm()
-    model_builder_diabetes_readmittance.knn()
-    model_builder_diabetes_readmittance.boosting()
+    # model_builder_diabetes_readmittance.decision_tree()
+    # model_builder_diabetes_readmittance.svm()
+    # model_builder_diabetes_readmittance.knn()
+    # model_builder_diabetes_readmittance.boosting()
     model_builder_diabetes_readmittance.neural_network()
     model_builder_diabetes_readmittance.write_config()
 

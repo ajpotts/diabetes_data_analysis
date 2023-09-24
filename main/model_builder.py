@@ -224,7 +224,7 @@ class ModelBuilder(object):
         
         model_type = "Neural Network"
         
-        MAX_ITER = 5000
+        MAX_ITER = 1000
         
         mlp_gs = MLPClassifier(max_iter=MAX_ITER, early_stopping=False, random_state=1)
         
@@ -234,7 +234,6 @@ class ModelBuilder(object):
             'solver': ['sgd', 'adam'],
             'alpha': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05],
             'learning_rate': ['constant', 'adaptive', 'invscaling'],
-            'learning_rate_init':[0.0001, 0.005, 0.001, 0.005]
             }
         
         gridSearch = self.grid_search(mlp_gs, param_grid, model_type)
@@ -261,7 +260,7 @@ class ModelBuilder(object):
         
         gridsearch_y_pred = self.fit_model(gridsearch_best, model_type, "mlp")
         
-        print("NUM ITER: " + str(gridsearch_best.n_iter_))
+        print("Best NN Grid Search Model, NUM ITER: " + str(gridsearch_best.n_iter_))
         
         self.model_config.write_config_value(model_type, "gridsearch_model_num_iterations", str(gridsearch_best.n_iter_))        
         
