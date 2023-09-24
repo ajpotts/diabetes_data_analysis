@@ -205,7 +205,7 @@ class ModelBuilder(object):
         
         model_type = "SVM"      
                
-        param_grid = {'C': [0.1, 1, 10, 100, 1000],
+        param_grid = {'C': [0.001, 0.05, 0.1, 1],
                'kernel': ['rbf', 'linear', 'poly'],
               'degree':[2, 3, 4]
               } 

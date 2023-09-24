@@ -1,0 +1,126 @@
+[DEFAULT]
+default=<Section: DEFAULT>
+
+[Decision Tree]
+parameter_grid={'criterion': ['gini', 'entropy', 'log_loss'], 'splitter': ['best', 'random'], 'max_features': ['sqrt', 'log2'], 'max_depth': [5, 10, 20, 30, 40, 50, 100, 500], 'min_samples_split': [5, 10, 20, 40, 60, 80, 100], 'min_impurity_decrease': [1e-05, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], 'max_leaf_nodes': [10, 20, 40, 60, 80, 100, 200]}
+num_jobs=-1
+cross_validation_n=5
+grid_search_time=46.11789321899414
+grid_search_best_score=0.6521428571428572
+grid_search_best_estimator=DecisionTreeClassifier(max_depth=20, max_features='sqrt', max_leaf_nodes=20,
+	                       min_impurity_decrease=1e-05, min_samples_split=40,
+	                       random_state=1)
+grid_search_best_criterion=gini
+grid_search_best_max_depth=20
+grid_search_best_max_features=sqrt
+grid_search_best_max_leaf_nodes=20
+grid_search_best_min_impurity_decrease=1e-05
+grid_search_best_min_samples_split=40
+grid_search_best_splitter=best
+gridsearch_training_time=0.002380847930908203
+gridsearch_accuracy=0.6333333333333333
+gridsearch_precision=0.6429377297375987
+gridsearch_recall=0.6309530425118088
+full_training_time=0.0017232894897460938
+full_accuracy=0.6333333333333333
+full_precision=0.6429377297375987
+full_recall=0.6309530425118088
+pruned_training_time=0.001222848892211914
+pruned_accuracy=0.6033333333333334
+pruned_precision=0.6285747149573694
+pruned_recall=0.5993887190886358
+
+[MODEL]
+name=diabetes_readmittance
+
+[OUTPUT]
+analysis_dir=/home/amandapotts/Documents/git/diabetes_data_analysis/main/analysis/diabetes_readmittance/
+
+[Training]
+num_training_rows=1400
+
+[Testing]
+num_testing_rows=600
+
+[SVM]
+parameter_grid={'C': [0.001, 0.05, 0.1, 1], 'kernel': ['rbf', 'linear', 'poly'], 'degree': [2, 3, 4]}
+num_jobs=-1
+cross_validation_n=5
+grid_search_time=3.547328472137451
+grid_search_best_score=0.635
+grid_search_best_estimator=SVC(C=1, degree=2, kernel='linear', random_state=1)
+grid_search_best_c=1
+grid_search_best_degree=2
+grid_search_best_kernel=linear
+gridsearch_training_time=2.197160005569458
+gridsearch_accuracy=0.6533333333333333
+gridsearch_precision=0.660342047340482
+gridsearch_recall=0.6514031675465407
+linear_training_time=0.3713560104370117
+linear_accuracy=0.6533333333333333
+linear_precision=0.660342047340482
+linear_recall=0.6514031675465407
+rbf_training_time=0.06888389587402344
+rbf_accuracy=0.6266666666666667
+rbf_precision=0.6297679565653422
+rbf_recall=0.6251180883578772
+
+[K Nearest Neighbors]
+parameter_grid={'n_neighbors': range(0, 50), 'weights': ['uniform', 'distance'], 'p': [1, 2, 3, 4, 5]}
+num_jobs=-1
+cross_validation_n=5
+grid_search_time=41.94683027267456
+grid_search_best_score=0.5892857142857142
+grid_search_best_estimator=KNeighborsClassifier(n_neighbors=38, weights='distance')
+grid_search_best_n_neighbors=38
+grid_search_best_p=2
+grid_search_best_weights=distance
+knn_training_time=40.380900382995605
+knn_accuracy=0.5866666666666667
+knn_precision=0.5865919925325866
+knn_recall=0.5866073909419283
+
+[Boosting]
+num_iterations=500
+parameter_grid={'learning_rate': [0.01, 0.1, 1], 'max_leaf_nodes': [4, 10, 20, 50], 'max_depth': [5, 10, 25, 50], 'min_samples_leaf': [5, 10, 20, 40, 60, 80, 100], 'ccp_alpha': [0.001, 0.01, 0.1, 1]}
+num_jobs=-1
+cross_validation_n=5
+grid_search_time=709.6410562992096
+grid_search_best_score=0.6492857142857144
+grid_search_best_estimator=GradientBoostingClassifier(ccp_alpha=0.001, learning_rate=0.01, max_depth=5,
+	                           max_leaf_nodes=4, min_samples_leaf=10,
+	                           n_estimators=500, random_state=1)
+grid_search_best_ccp_alpha=0.001
+grid_search_best_learning_rate=0.01
+grid_search_best_max_depth=5
+grid_search_best_max_leaf_nodes=4
+grid_search_best_min_samples_leaf=10
+gridsearch_training_time=1.407318353652954
+gridsearch_accuracy=0.6266666666666667
+gridsearch_precision=0.6500250436571862
+gridsearch_recall=0.6231731036399
+
+[Neural Network]
+parameter_grid={'hidden_layer_sizes': [(10, 30, 10), (10, 10, 10), (50, 10), (30, 10), (20,), (50,)], 'activation': ['tanh', 'relu', 'logistic'], 'solver': ['sgd', 'adam'], 'alpha': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05], 'learning_rate': ['constant', 'adaptive', 'invscaling']}
+num_jobs=-1
+cross_validation_n=5
+grid_search_time=530.1595482826233
+grid_search_best_score=0.62
+grid_search_best_estimator=MLPClassifier(activation='logistic', alpha=0.01, hidden_layer_sizes=(50,),
+	              max_iter=1000, random_state=1, solver='sgd')
+grid_search_best_activation=logistic
+grid_search_best_alpha=0.01
+grid_search_best_hidden_layer_sizes=(50,)
+grid_search_best_learning_rate=constant
+grid_search_best_solver=sgd
+mlp_early_stopping_training_time=0.6550357341766357
+mlp_early_stopping_accuracy=0.5616666666666666
+mlp_early_stopping_precision=0.5822336813785152
+mlp_early_stopping_recall=0.5570714087246458
+gridsearch_earlystopping_model_num_iterations=44
+mlp_training_time=3.3475141525268555
+mlp_accuracy=0.6283333333333333
+mlp_precision=0.6301146966455782
+mlp_recall=0.6270908585718256
+gridsearch_model_num_iterations=651
+
