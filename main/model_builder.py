@@ -151,6 +151,8 @@ class ModelBuilder(object):
                                         random_state=1)
         
         fulltree_y_pred = self.fit_model(fulltree, model_type, "full")
+        
+    
           
         self.write_decision_tree_graph(fulltree, self.analysis_dir + self.model_name + '_full_decision_tree_graph.png', feature_cols=feature_cols)     
         
@@ -196,6 +198,8 @@ class ModelBuilder(object):
         prunedtree_y_pred = self.fit_model(pruned_tree, model_type, "pruned")
           
         self.write_decision_tree_graph(pruned_tree, self.analysis_dir + self.model_name + '_pruned_decision_tree_graph.png', feature_cols=feature_cols)
+        
+        self.write_config()
                 
     def svm(self):
         
@@ -217,6 +221,8 @@ class ModelBuilder(object):
         #  rbf kernel
         rbf_kernel = SVC(kernel='rbf', random_state=1)
         rbf_y_pred = self.fit_model(rbf_kernel, model_type, 'rbf')
+        
+        self.write_config()
         
         return gridsearch_y_pred
 
@@ -262,7 +268,9 @@ class ModelBuilder(object):
         
         print("Best NN Grid Search Model, NUM ITER: " + str(gridsearch_best.n_iter_))
         
-        self.model_config.write_config_value(model_type, "gridsearch_model_num_iterations", str(gridsearch_best.n_iter_))        
+        self.model_config.write_config_value(model_type, "gridsearch_model_num_iterations", str(gridsearch_best.n_iter_))     
+        
+        self.write_config()   
         
         return gridsearch_y_pred
         
@@ -282,6 +290,8 @@ class ModelBuilder(object):
         
         gridsearch_y_pred = self.fit_model(gridSearch, model_type, "knn")
         
+        self.write_config()
+        
         return gridsearch_y_pred    
     
     def boosting(self):
@@ -294,9 +304,9 @@ class ModelBuilder(object):
         boost = GradientBoostingClassifier(n_estimators=NUM_ESTIMATORS, random_state=1)
         
         param_grid = {
-            "learning_rate": [0.01, 0.1, 1, 10],
-            "max_leaf_nodes": [4, 10, 20, 40, 60, 80, 100],
-            "max_depth": [5, 10, 20, 30, 50],
+            "learning_rate": [0.01, 0.1, 1],
+            "max_leaf_nodes": [4, 10, 20, 50],
+            "max_depth": [5, 10, 25, 50],
             "min_samples_leaf": [5, 10, 20, 40, 60, 80, 100],
             "ccp_alpha":[0.001, 0.01, 0.1, 1]
         }
@@ -313,6 +323,8 @@ class ModelBuilder(object):
                                         random_state=1)
         
         gridsearch_y_pred = self.fit_model(gridsearch_best, model_type, "gridsearch")
+        
+        self.write_config()
         
         return gridsearch_y_pred 
 
@@ -342,6 +354,8 @@ class ModelBuilder(object):
         print('Grid Search parameters: ', gridSearch.best_params_)
         for key in gridSearch.best_params_:
             self.model_config.write_config_value(model_type, "grid_search_best_" + key, str(gridSearch.best_params_[key]))
+            
+        self.write_config()
             
         return gridSearch
     
