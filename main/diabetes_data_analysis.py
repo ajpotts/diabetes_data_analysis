@@ -13,7 +13,7 @@ from pathlib import Path
 import pandas as pd
 from model_builder import ModelBuilder
 
-MAX_ROWS = 2000
+MAX_ROWS = 3000
 
 
 def main():
