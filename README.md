@@ -1,2 +1,61 @@
-# diabetes_data_analysis
-Demonstration of machine learning techniques using two diabetes data sets as examples.
+# Project
+Author: Amanda Potts
+Fall 2023
+
+
+## Setup
+
+python3 is required to run this project.
+
+Download the code repository from github:
+> git clone git@github.com:ajpotts/diabetes_data_analysis.git
+
+It is recommended to install python eviromnent.  On Ubuntu, it can be installed with:
+> sudo apt install python3.10-venv
+
+Install graphviz.  On Ubuntu, it can be installed with:
+> sudo apt-get install graphviz
+
+To start python environment:
+> bash create_env.sh 
+> source py-env/bin/activate
+
+To install requirments without python environment (use at your own risk):
+> pip install -r requirements.txt
+
+
+
+## Download the data
+
+Download the Presence Dataset from here:
+https://www.kaggle.com/datasets/andrewmvd/early-diabetes-classification
+
+And unzip the data into this folder:
+> data/diabetes_presence
+
+Download the Readmittance Dataset from here:
+ttps://www.kaggle.com/datasets/sulphatet/diabetes-130us-hospitals-for-years-19992008?select=diabetic_data.csv
+
+And unzip the data into this folder:
+> data/diabetes_readmittance
+
+
+
+## To Run
+
+> cd main/
+> python3 diabetes_data_analysis.py
+
+## Output
+
+Analysis files will be written to two directories.  
+
+The Presence Dataset results will be written here:
+> analysis/diabetes_presence
+
+The Readmittance Dataset results will be written here:
+> analysis/diabetes_readmittance
+
+
+
+
