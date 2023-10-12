@@ -8,6 +8,7 @@ import os
 import sys
 import time
 import math 
+import mlrose
 
 from six import StringIO
 import matplotlib.pyplot as plt
@@ -82,6 +83,42 @@ class ModelBuilder(object):
     def write_config(self):
         self.set_config_values()
         self.model_config.write(open(self.analysis_dir + "out_config.txt", 'w'), space_around_delimiters=False)
+        
+    def nn_random_hill_climb(self):
+        # Initialize neural network object and fit object
+        nn_model1 = mlrose.NeuralNetwork(hidden_nodes=[50, 10], activation='relu', \
+                                     algorithm='random_hill_climb', max_iters=10000, \
+                                     bias=True, is_classifier=True, learning_rate=0.0001, \
+                                     early_stopping=False, clip_max=5, max_attempts=100, \
+                                     random_state=1)
+        
+        model_type = "Neural Network"
+        
+        self.mlrose_nn(nn_model1)
+            # self.fit_model(nn_model1, model_type, "random_hill_climb")
+        # self.model_config.write_config_value(model_type, "gridsearch_earlystopping_model_num_iterations", str(gridsearch_early_stopping.n_iter_))
+
+    def mlrose_nn(self, model):
+
+        model.fit(self.X_train, self.y_train)
+        
+        from sklearn.metrics import accuracy_score
+        
+        # Predict labels for train set and assess accuracy
+        y_train_pred = model.predict(self.X_train)
+        
+        y_train_accuracy = accuracy_score(self.y_train, y_train_pred)
+        
+        print("Train Accuracy: ")
+        print(y_train_accuracy)
+        
+        # Predict labels for test set and assess accuracy
+        y_test_pred = model.predict(self.X_test)
+        
+        y_test_accuracy = accuracy_score(self.y_test, y_test_pred)
+        
+        print("Test Accuracy: ")        
+        print(y_test_accuracy)
     
     def decision_tree(self):
         
@@ -151,8 +188,6 @@ class ModelBuilder(object):
                                         random_state=1)
         
         fulltree_y_pred = self.fit_model(fulltree, model_type, "full")
-        
-    
           
         self.write_decision_tree_graph(fulltree, self.analysis_dir + self.model_name + '_full_decision_tree_graph.png', feature_cols=feature_cols)     
         
@@ -430,15 +465,18 @@ class ModelBuilder(object):
             plt.ylabel('Cost')
             plt.savefig(loss_curve_filename)
         
-        cm = confusion_matrix(self.y_test, y_pred, labels=model.classes_)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+        try:
+            cm = confusion_matrix(self.y_test, y_pred, labels=model.classes_)
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm,
                              display_labels=model.classes_)
         
-        confusion_matrix_filename = self.analysis_dir + "/confusion_matrix_" + model_type.replace(" ", "_") + "_" + model_subtype + ".png"
-        disp.plot().figure_.savefig(confusion_matrix_filename , dpi=300)
+            confusion_matrix_filename = self.analysis_dir + "/confusion_matrix_" + model_type.replace(" ", "_") + "_" + model_subtype + ".png"
+            disp.plot().figure_.savefig(confusion_matrix_filename , dpi=300)
  
-        with open(report_filename, "w") as text_file:
-            text_file.write(report + "\n\n" + str(cm))
+            with open(report_filename, "w") as text_file:
+                text_file.write(report + "\n\n" + str(cm))
+        except:
+            pass
         
         self.clear_plots()
         learning_curve_filename = self.analysis_dir + "/learning_curve_" + model_type.replace(" ", "_") + "_" + model_subtype + ".png"

@@ -1,0 +1,1107 @@
+Original Data size (num Rows): 101766
+
+Original Data size (num Columns): 50
+
+['encounter_id', 'patient_nbr', 'race', 'gender', 'age', 'weight', 'admission_type_id', 'discharge_disposition_id', 'admission_source_id', 'time_in_hospital', 'payer_code', 'medical_specialty', 'num_lab_procedures', 'num_procedures', 'num_medications', 'number_outpatient', 'number_emergency', 'number_inpatient', 'diag_1', 'diag_2', 'diag_3', 'number_diagnoses', 'max_glu_serum', 'A1Cresult', 'metformin', 'repaglinide', 'nateglinide', 'chlorpropamide', 'glimepiride', 'acetohexamide', 'glipizide', 'glyburide', 'tolbutamide', 'pioglitazone', 'rosiglitazone', 'acarbose', 'miglitol', 'troglitazone', 'tolazamide', 'examide', 'citoglipton', 'insulin', 'glyburide-metformin', 'glipizide-metformin', 'glimepiride-pioglitazone', 'metformin-rosiglitazone', 'metformin-pioglitazone', 'change', 'diabetesMed', 'readmitted']
+
+
+
+encounter_id
+12522        1
+15738        1
+16680        1
+28236        1
+35754        1
+            ..
+443847548    1
+443847782    1
+443854148    1
+443857166    1
+443867222    1
+Length: 101766, dtype: int64
+
+encounter_id
+12522        0.00001
+15738        0.00001
+16680        0.00001
+28236        0.00001
+35754        0.00001
+              ...   
+443847548    0.00001
+443847782    0.00001
+443854148    0.00001
+443857166    0.00001
+443867222    0.00001
+Length: 101766, dtype: float64
+
+patient_nbr
+135          2
+378          1
+729          1
+774          1
+927          1
+            ..
+189351095    1
+189365864    1
+189445127    1
+189481478    1
+189502619    1
+Length: 71518, dtype: int64
+
+patient_nbr
+135          0.00002
+378          0.00001
+729          0.00001
+774          0.00001
+927          0.00001
+              ...   
+189351095    0.00001
+189365864    0.00001
+189445127    0.00001
+189481478    0.00001
+189502619    0.00001
+Length: 71518, dtype: float64
+
+race
+?                   2273
+AfricanAmerican    19210
+Asian                641
+Caucasian          76099
+Hispanic            2037
+Other               1506
+dtype: int64
+
+race
+?                  0.022336
+AfricanAmerican    0.188766
+Asian              0.006299
+Caucasian          0.747784
+Hispanic           0.020017
+Other              0.014799
+dtype: float64
+
+gender
+Female             54708
+Male               47055
+Unknown/Invalid        3
+dtype: int64
+
+gender
+Female             0.537586
+Male               0.462384
+Unknown/Invalid    0.000029
+dtype: float64
+
+age
+[0-10)        161
+[10-20)       691
+[20-30)      1657
+[30-40)      3775
+[40-50)      9685
+[50-60)     17256
+[60-70)     22483
+[70-80)     26068
+[80-90)     17197
+[90-100)     2793
+dtype: int64
+
+age
+[0-10)      0.001582
+[10-20)     0.006790
+[20-30)     0.016282
+[30-40)     0.037095
+[40-50)     0.095169
+[50-60)     0.169565
+[60-70)     0.220928
+[70-80)     0.256156
+[80-90)     0.168986
+[90-100)    0.027445
+dtype: float64
+
+weight
+>200             3
+?            98569
+[0-25)          48
+[100-125)      625
+[125-150)      145
+[150-175)       35
+[175-200)       11
+[25-50)         97
+[50-75)        897
+[75-100)      1336
+dtype: int64
+
+weight
+>200         0.000029
+?            0.968585
+[0-25)       0.000472
+[100-125)    0.006142
+[125-150)    0.001425
+[150-175)    0.000344
+[175-200)    0.000108
+[25-50)      0.000953
+[50-75)      0.008814
+[75-100)     0.013128
+dtype: float64
+
+admission_type_id
+1    53990
+2    18480
+3    18869
+4       10
+5     4785
+6     5291
+7       21
+8      320
+dtype: int64
+
+admission_type_id
+1    0.530531
+2    0.181593
+3    0.185416
+4    0.000098
+5    0.047020
+6    0.051992
+7    0.000206
+8    0.003144
+dtype: float64
+
+discharge_disposition_id
+1     60234
+2      2128
+3     13954
+4       815
+5      1184
+6     12902
+7       623
+8       108
+9        21
+10        6
+11     1642
+12        3
+13      399
+14      372
+15       63
+16       11
+17       14
+18     3691
+19        8
+20        2
+22     1993
+23      412
+24       48
+25      989
+27        5
+28      139
+dtype: int64
+
+discharge_disposition_id
+1     0.591887
+2     0.020911
+3     0.137118
+4     0.008009
+5     0.011635
+6     0.126781
+7     0.006122
+8     0.001061
+9     0.000206
+10    0.000059
+11    0.016135
+12    0.000029
+13    0.003921
+14    0.003655
+15    0.000619
+16    0.000108
+17    0.000138
+18    0.036269
+19    0.000079
+20    0.000020
+22    0.019584
+23    0.004049
+24    0.000472
+25    0.009718
+27    0.000049
+28    0.001366
+dtype: float64
+
+admission_source_id
+1     29565
+2      1104
+3       187
+4      3187
+5       855
+6      2264
+7     57494
+8        16
+9       125
+10        8
+11        2
+13        1
+14        2
+17     6781
+20      161
+22       12
+25        2
+dtype: int64
+
+admission_source_id
+1     0.290519
+2     0.010848
+3     0.001838
+4     0.031317
+5     0.008402
+6     0.022247
+7     0.564963
+8     0.000157
+9     0.001228
+10    0.000079
+11    0.000020
+13    0.000010
+14    0.000020
+17    0.066633
+20    0.001582
+22    0.000118
+25    0.000020
+dtype: float64
+
+time_in_hospital
+1     14208
+2     17224
+3     17756
+4     13924
+5      9966
+6      7539
+7      5859
+8      4391
+9      3002
+10     2342
+11     1855
+12     1448
+13     1210
+14     1042
+dtype: int64
+
+time_in_hospital
+1     0.139614
+2     0.169251
+3     0.174479
+4     0.136824
+5     0.097931
+6     0.074082
+7     0.057573
+8     0.043148
+9     0.029499
+10    0.023014
+11    0.018228
+12    0.014229
+13    0.011890
+14    0.010239
+dtype: float64
+
+payer_code
+?     40256
+BC     4655
+CH      146
+CM     1937
+CP     2533
+DM      549
+FR        1
+HM     6274
+MC    32439
+MD     3532
+MP       79
+OG     1033
+OT       95
+PO      592
+SI       55
+SP     5007
+UN     2448
+WC      135
+dtype: int64
+
+payer_code
+?     0.395574
+BC    0.045742
+CH    0.001435
+CM    0.019034
+CP    0.024890
+DM    0.005395
+FR    0.000010
+HM    0.061651
+MC    0.318761
+MD    0.034707
+MP    0.000776
+OG    0.010151
+OT    0.000934
+PO    0.005817
+SI    0.000540
+SP    0.049201
+UN    0.024055
+WC    0.001327
+dtype: float64
+
+medical_specialty
+?                                   49949
+AllergyandImmunology                    7
+Anesthesiology                         12
+Anesthesiology-Pediatric               19
+Cardiology                           5352
+                                    ...  
+Surgery-PlasticwithinHeadandNeck        1
+Surgery-Thoracic                      109
+Surgery-Vascular                      533
+SurgicalSpecialty                      33
+Urology                               685
+Length: 73, dtype: int64
+
+medical_specialty
+?                                   0.490822
+AllergyandImmunology                0.000069
+Anesthesiology                      0.000118
+Anesthesiology-Pediatric            0.000187
+Cardiology                          0.052591
+                                      ...   
+Surgery-PlasticwithinHeadandNeck    0.000010
+Surgery-Thoracic                    0.001071
+Surgery-Vascular                    0.005238
+SurgicalSpecialty                   0.000324
+Urology                             0.006731
+Length: 73, dtype: float64
+
+num_lab_procedures
+1      3208
+2      1101
+3       668
+4       378
+5       286
+       ... 
+120       1
+121       1
+126       1
+129       1
+132       1
+Length: 118, dtype: int64
+
+num_lab_procedures
+1      0.031523
+2      0.010819
+3      0.006564
+4      0.003714
+5      0.002810
+         ...   
+120    0.000010
+121    0.000010
+126    0.000010
+129    0.000010
+132    0.000010
+Length: 118, dtype: float64
+
+num_procedures
+0    46652
+1    20742
+2    12717
+3     9443
+4     4180
+5     3078
+6     4954
+dtype: int64
+
+num_procedures
+0    0.458424
+1    0.203821
+2    0.124963
+3    0.092791
+4    0.041075
+5    0.030246
+6    0.048680
+dtype: float64
+
+num_medications
+1      262
+2      470
+3      900
+4     1417
+5     2017
+      ... 
+72       3
+74       1
+75       2
+79       1
+81       1
+Length: 75, dtype: int64
+
+num_medications
+1     0.002575
+2     0.004618
+3     0.008844
+4     0.013924
+5     0.019820
+        ...   
+72    0.000029
+74    0.000010
+75    0.000020
+79    0.000010
+81    0.000010
+Length: 75, dtype: float64
+
+number_outpatient
+0     85027
+1      8547
+2      3594
+3      2042
+4      1099
+5       533
+6       303
+7       155
+8        98
+9        83
+10       57
+11       42
+12       30
+13       31
+14       28
+15       20
+16       15
+17        8
+18        5
+19        3
+20        7
+21        7
+22        5
+23        2
+24        3
+25        2
+26        2
+27        3
+28        1
+29        2
+33        2
+34        1
+35        2
+36        2
+37        1
+38        1
+39        1
+40        1
+42        1
+dtype: int64
+
+number_outpatient
+0     0.835515
+1     0.083987
+2     0.035316
+3     0.020066
+4     0.010799
+5     0.005238
+6     0.002977
+7     0.001523
+8     0.000963
+9     0.000816
+10    0.000560
+11    0.000413
+12    0.000295
+13    0.000305
+14    0.000275
+15    0.000197
+16    0.000147
+17    0.000079
+18    0.000049
+19    0.000029
+20    0.000069
+21    0.000069
+22    0.000049
+23    0.000020
+24    0.000029
+25    0.000020
+26    0.000020
+27    0.000029
+28    0.000010
+29    0.000020
+33    0.000020
+34    0.000010
+35    0.000020
+36    0.000020
+37    0.000010
+38    0.000010
+39    0.000010
+40    0.000010
+42    0.000010
+dtype: float64
+
+number_emergency
+0     90383
+1      7677
+2      2042
+3       725
+4       374
+5       192
+6        94
+7        73
+8        50
+9        33
+10       34
+11       23
+12       10
+13       12
+14        3
+15        3
+16        5
+18        5
+19        4
+20        4
+21        2
+22        6
+24        1
+25        2
+28        1
+29        1
+37        1
+42        1
+46        1
+54        1
+63        1
+64        1
+76        1
+dtype: int64
+
+number_emergency
+0     0.888145
+1     0.075438
+2     0.020066
+3     0.007124
+4     0.003675
+5     0.001887
+6     0.000924
+7     0.000717
+8     0.000491
+9     0.000324
+10    0.000334
+11    0.000226
+12    0.000098
+13    0.000118
+14    0.000029
+15    0.000029
+16    0.000049
+18    0.000049
+19    0.000039
+20    0.000039
+21    0.000020
+22    0.000059
+24    0.000010
+25    0.000020
+28    0.000010
+29    0.000010
+37    0.000010
+42    0.000010
+46    0.000010
+54    0.000010
+63    0.000010
+64    0.000010
+76    0.000010
+dtype: float64
+
+number_inpatient
+0     67630
+1     19521
+2      7566
+3      3411
+4      1622
+5       812
+6       480
+7       268
+8       151
+9       111
+10       61
+11       49
+12       34
+13       20
+14       10
+15        9
+16        6
+17        1
+18        1
+19        2
+21        1
+dtype: int64
+
+number_inpatient
+0     0.664564
+1     0.191822
+2     0.074347
+3     0.033518
+4     0.015939
+5     0.007979
+6     0.004717
+7     0.002633
+8     0.001484
+9     0.001091
+10    0.000599
+11    0.000481
+12    0.000334
+13    0.000197
+14    0.000098
+15    0.000088
+16    0.000059
+17    0.000010
+18    0.000010
+19    0.000020
+21    0.000010
+dtype: float64
+
+diag_1
+10      1
+11     10
+110     2
+112    73
+114     1
+       ..
+V63     8
+V66     2
+V67     1
+V70     1
+V71     9
+Length: 717, dtype: int64
+
+diag_1
+10     0.000010
+11     0.000098
+110    0.000020
+112    0.000717
+114    0.000010
+         ...   
+V63    0.000079
+V66    0.000020
+V67    0.000010
+V70    0.000010
+V71    0.000088
+Length: 717, dtype: float64
+
+diag_2
+11       3
+110      8
+111      1
+112    201
+114      1
+      ... 
+V69      1
+V70      7
+V72     13
+V85    169
+V86      2
+Length: 749, dtype: int64
+
+diag_2
+11     0.000029
+110    0.000079
+111    0.000010
+112    0.001975
+114    0.000010
+         ...   
+V69    0.000010
+V70    0.000069
+V72    0.000128
+V85    0.001661
+V86    0.000020
+Length: 749, dtype: float64
+
+diag_3
+11       2
+110     20
+111      1
+112    206
+115      1
+      ... 
+V66     18
+V70      2
+V72      8
+V85     96
+V86      3
+Length: 790, dtype: int64
+
+diag_3
+11     0.000020
+110    0.000197
+111    0.000010
+112    0.002024
+115    0.000010
+         ...   
+V66    0.000177
+V70    0.000020
+V72    0.000079
+V85    0.000943
+V86    0.000029
+Length: 790, dtype: float64
+
+number_diagnoses
+1       219
+2      1023
+3      2835
+4      5537
+5     11393
+6     10161
+7     10393
+8     10616
+9     49474
+10       17
+11       11
+12        9
+13       16
+14        7
+15       10
+16       45
+dtype: int64
+
+number_diagnoses
+1     0.002152
+2     0.010052
+3     0.027858
+4     0.054409
+5     0.111953
+6     0.099847
+7     0.102126
+8     0.104318
+9     0.486155
+10    0.000167
+11    0.000108
+12    0.000088
+13    0.000157
+14    0.000069
+15    0.000098
+16    0.000442
+dtype: float64
+
+max_glu_serum
+>200    1485
+>300    1264
+Norm    2597
+dtype: int64
+
+max_glu_serum
+>200    0.277778
+>300    0.236438
+Norm    0.485784
+dtype: float64
+
+A1Cresult
+>7      3812
+>8      8216
+Norm    4990
+dtype: int64
+
+A1Cresult
+>7      0.223998
+>8      0.482783
+Norm    0.293219
+dtype: float64
+
+metformin
+Down        575
+No        81778
+Steady    18346
+Up         1067
+dtype: int64
+
+metformin
+Down      0.005650
+No        0.803589
+Steady    0.180276
+Up        0.010485
+dtype: float64
+
+repaglinide
+Down          45
+No        100227
+Steady      1384
+Up           110
+dtype: int64
+
+repaglinide
+Down      0.000442
+No        0.984877
+Steady    0.013600
+Up        0.001081
+dtype: float64
+
+nateglinide
+Down          11
+No        101063
+Steady       668
+Up            24
+dtype: int64
+
+nateglinide
+Down      0.000108
+No        0.993092
+Steady    0.006564
+Up        0.000236
+dtype: float64
+
+chlorpropamide
+Down           1
+No        101680
+Steady        79
+Up             6
+dtype: int64
+
+chlorpropamide
+Down      0.000010
+No        0.999155
+Steady    0.000776
+Up        0.000059
+dtype: float64
+
+glimepiride
+Down        194
+No        96575
+Steady     4670
+Up          327
+dtype: int64
+
+glimepiride
+Down      0.001906
+No        0.948991
+Steady    0.045890
+Up        0.003213
+dtype: float64
+
+acetohexamide
+No        101765
+Steady         1
+dtype: int64
+
+acetohexamide
+No        0.99999
+Steady    0.00001
+dtype: float64
+
+glipizide
+Down        560
+No        89080
+Steady    11356
+Up          770
+dtype: int64
+
+glipizide
+Down      0.005503
+No        0.875341
+Steady    0.111589
+Up        0.007566
+dtype: float64
+
+glyburide
+Down        564
+No        91116
+Steady     9274
+Up          812
+dtype: int64
+
+glyburide
+Down      0.005542
+No        0.895348
+Steady    0.091131
+Up        0.007979
+dtype: float64
+
+tolbutamide
+No        101743
+Steady        23
+dtype: int64
+
+tolbutamide
+No        0.999774
+Steady    0.000226
+dtype: float64
+
+pioglitazone
+Down        118
+No        94438
+Steady     6976
+Up          234
+dtype: int64
+
+pioglitazone
+Down      0.001160
+No        0.927992
+Steady    0.068549
+Up        0.002299
+dtype: float64
+
+rosiglitazone
+Down         87
+No        95401
+Steady     6100
+Up          178
+dtype: int64
+
+rosiglitazone
+Down      0.000855
+No        0.937455
+Steady    0.059941
+Up        0.001749
+dtype: float64
+
+acarbose
+Down           3
+No        101458
+Steady       295
+Up            10
+dtype: int64
+
+acarbose
+Down      0.000029
+No        0.996973
+Steady    0.002899
+Up        0.000098
+dtype: float64
+
+miglitol
+Down           5
+No        101728
+Steady        31
+Up             2
+dtype: int64
+
+miglitol
+Down      0.000049
+No        0.999627
+Steady    0.000305
+Up        0.000020
+dtype: float64
+
+troglitazone
+No        101763
+Steady         3
+dtype: int64
+
+troglitazone
+No        0.999971
+Steady    0.000029
+dtype: float64
+
+tolazamide
+No        101727
+Steady        38
+Up             1
+dtype: int64
+
+tolazamide
+No        0.999617
+Steady    0.000373
+Up        0.000010
+dtype: float64
+
+examide
+No    101766
+dtype: int64
+
+examide
+No    1.0
+dtype: float64
+
+citoglipton
+No    101766
+dtype: int64
+
+citoglipton
+No    1.0
+dtype: float64
+
+insulin
+Down      12218
+No        47383
+Steady    30849
+Up        11316
+dtype: int64
+
+insulin
+Down      0.120060
+No        0.465607
+Steady    0.303137
+Up        0.111196
+dtype: float64
+
+glyburide-metformin
+Down           6
+No        101060
+Steady       692
+Up             8
+dtype: int64
+
+glyburide-metformin
+Down      0.000059
+No        0.993063
+Steady    0.006800
+Up        0.000079
+dtype: float64
+
+glipizide-metformin
+No        101753
+Steady        13
+dtype: int64
+
+glipizide-metformin
+No        0.999872
+Steady    0.000128
+dtype: float64
+
+glimepiride-pioglitazone
+No        101765
+Steady         1
+dtype: int64
+
+glimepiride-pioglitazone
+No        0.99999
+Steady    0.00001
+dtype: float64
+
+metformin-rosiglitazone
+No        101764
+Steady         2
+dtype: int64
+
+metformin-rosiglitazone
+No        0.99998
+Steady    0.00002
+dtype: float64
+
+metformin-pioglitazone
+No        101765
+Steady         1
+dtype: int64
+
+metformin-pioglitazone
+No        0.99999
+Steady    0.00001
+dtype: float64
+
+change
+Ch    47011
+No    54755
+dtype: int64
+
+change
+Ch    0.461952
+No    0.538048
+dtype: float64
+
+diabetesMed
+No     23403
+Yes    78363
+dtype: int64
+
+diabetesMed
+No     0.229969
+Yes    0.770031
+dtype: float64
+
+readmitted
+<30    11357
+>30    35545
+NO     54864
+dtype: int64
+
+readmitted
+<30    0.111599
+>30    0.349282
+NO     0.539119
+dtype: float64
