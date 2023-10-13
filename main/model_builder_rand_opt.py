@@ -66,7 +66,7 @@ class ModelBuilderRandOpt(ModelBuilder):
         self.restarts = 10
         
         self.learning_rates = [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
-        self.population_sizes = [200, 300]
+        self.population_sizes = [200, 300, 500, 1000]
         self.probs = [0.0001, 0.001, 0.01, 0.05, 0.1 ]
         
         self.geom_decay = [0.9, 0.99, 0.999, 0.9999, 0.99999]
@@ -180,6 +180,7 @@ class ModelBuilderRandOpt(ModelBuilder):
                 print("Genetic....")
     
                 print("\n\npop: " + str(pop))
+                print("prob: " + str(prob))
                 model = mlrose.NeuralNetwork(hidden_nodes=self.hidden_nodes,
                                              activation=self.activation, \
                                          algorithm='genetic_alg',
@@ -345,7 +346,7 @@ class ModelBuilderRandOpt(ModelBuilder):
         plt.grid()
         plt.legend(loc='lower right')
         # plt.show()
-        filename = self.analysis_dir+model_type+"_learning_curve.png"
+        filename = self.analysis_dir + model_type + "_learning_curve.png"
         plt.savefig(filename)
         
         return end_time, model.fitness_curve
