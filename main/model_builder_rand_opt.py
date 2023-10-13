@@ -66,10 +66,10 @@ class ModelBuilderRandOpt(ModelBuilder):
         
         self.learning_rates = [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
         self.population_sizes = [200, 300]
-        self.probs = [200, 300]
+        self.probs = [0.0001, 0.001, 0.01, 0.05, 0.1 ]
         
-        self.geom_decay = [0.9, 0.99, 0.999, 0.9999, 0.99999],
-        self.arith_decay = [0.01, 0.001, 0.0001],
+        self.geom_decay = [0.9, 0.99, 0.999, 0.9999, 0.99999]
+        self.arith_decay = [0.01, 0.001, 0.0001]
         self.exp_decay = [0.001, 0.005, 0.05]
     
     def set_config_values(self):
@@ -130,7 +130,7 @@ class ModelBuilderRandOpt(ModelBuilder):
         for rate in self.learning_rates:
             for decay in self.arith_decay:
                 print("Simulated Annealing....")
-    
+                print("decay: " + str(decay))
                 print("\n\nrate: " + str(rate))
                 model = mlrose.NeuralNetwork(hidden_nodes=self.hidden_nodes, activation=self.activation, \
                                          algorithm='simulated_annealing', max_iters=self.max_iters, \
@@ -229,10 +229,10 @@ class ModelBuilderRandOpt(ModelBuilder):
     
     def nn_random_opt(self):
         
-        hc_time, hc_curve = self.nn_random_hill_climb_get_best_curve()   
-        
+        # hc_time, hc_curve = self.nn_random_hill_climb_get_best_curve()   
+        #
         sa_time, sa_curve = self.nn_random_sa_get_best_curve() 
-  
+        
         gradient_descent_model = mlrose.NeuralNetwork(hidden_nodes=self.hidden_nodes, activation=self.activation, \
                                      algorithm='gradient_descent', max_iters=self.max_iters, \
                                      bias=self.bias, is_classifier=True, learning_rate=0.0001, \
@@ -243,15 +243,8 @@ class ModelBuilderRandOpt(ModelBuilder):
         gradient_descent_time, gradient_descent_curve = self.mlrose_nn(gradient_descent_model, "gradient_descent")
 
         print("\n\nStarting Genetic Algorithm:")  
-
-        ga_model = mlrose.NeuralNetwork(hidden_nodes=self.hidden_nodes, activation=self.activation, \
-                                     algorithm='genetic_alg', max_iters=self.max_iters, \
-                                     bias=self.bias, is_classifier=True, learning_rate=0.0001, \
-                                     early_stopping=False, clip_max=self.clip_max, max_attempts=self.max_attempts, \
-                                     curve=True,
-                                     random_state=1) 
         
-        ga_time, ga_curve = self.mlrose_nn(ga_model, "genetic_algorithm")
+        ga_time, ga_curve = self.nn_genetic_get_best_curve()
 
         learning_curve_filename = self.analysis_dir + "rand_opt_performance.png"
         runtime_filename = self.analysis_dir + "rand_opt_run_time.png"
