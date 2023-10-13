@@ -30,6 +30,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.utils import shuffle
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+from sklearn.pipeline import make_pipeline
 
 from model_config_parser import ModelConfig
 from model_builder import ModelBuilder
@@ -229,8 +230,8 @@ class ModelBuilderRandOpt(ModelBuilder):
     
     def nn_random_opt(self):
         
-        # hc_time, hc_curve = self.nn_random_hill_climb_get_best_curve()   
-        #
+        hc_time, hc_curve = self.nn_random_hill_climb_get_best_curve()   
+        
         sa_time, sa_curve = self.nn_random_sa_get_best_curve() 
         
         gradient_descent_model = mlrose.NeuralNetwork(hidden_nodes=self.hidden_nodes, activation=self.activation, \
@@ -316,6 +317,36 @@ class ModelBuilderRandOpt(ModelBuilder):
         # F1
         test_f1 = metrics.f1_score(self.y_test_hot, y_test_pred, average='weighted')
         self.model_config.write_config_value(model_type, "test_weighed_f1", str(test_f1))
+        
+        self.clear_plots()
+        pipeline = make_pipeline(model)
+        
+        train_sizes, train_scores, test_scores = learning_curve(estimator=pipeline, X=self.X_train, y=self.y_train_hot,
+                                                       cv=10, train_sizes=np.linspace(0.1, 1.0, 10),
+                                                     n_jobs=1)
+        
+        #
+        # Calculate training and test mean and std
+        #
+        train_mean = np.mean(train_scores, axis=1)
+        train_std = np.std(train_scores, axis=1)
+        test_mean = np.mean(test_scores, axis=1)
+        test_std = np.std(test_scores, axis=1)
+        #
+        # Plot the learning curve
+        #
+        plt.plot(train_sizes, train_mean, color='blue', marker='o', markersize=5, label='Training Accuracy')
+        plt.fill_between(train_sizes, train_mean + train_std, train_mean - train_std, alpha=0.15, color='blue')
+        plt.plot(train_sizes, test_mean, color='green', marker='+', markersize=5, linestyle='--', label='Validation Accuracy')
+        plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, alpha=0.15, color='green')
+        plt.title('Learning Curve')
+        plt.xlabel('Training Data Size')
+        plt.ylabel('Model accuracy')
+        plt.grid()
+        plt.legend(loc='lower right')
+        # plt.show()
+        filename = self.analysis_dir+model_type+"_learning_curve.png"
+        plt.savefig(filename)
         
         return end_time, model.fitness_curve
     

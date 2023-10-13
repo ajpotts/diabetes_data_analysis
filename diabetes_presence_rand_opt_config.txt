@@ -2,50 +2,55 @@
 default=<Section: DEFAULT>
 
 [randomized_hill_climbing]
-best_rate=1.0
-best_cv_score=0.7529842785672447
-training_time=2.5487802028656006
-training_accuracy=0.8708791208791209
-training_weighed_f1=0.8725093974696775
-test_accuracy=0.8910256410256411
-test_weighed_percision=0.9106430539357367
-test_weighed_recall=0.8910256410256411
-test_weighed_f1=0.8926048468830003
+best_rate=1.1
+best_cv_score=0.9535883182923269
+training_time=18.887587070465088
+training_accuracy=0.9945054945054945
+training_weighed_f1=0.9944981357927788
+test_accuracy=0.967948717948718
+test_weighed_percision=0.9681356837606836
+test_weighed_recall=0.967948717948718
+test_weighed_f1=0.968000352791575
 
 [simulated_annealing]
-best_rate=1.1
-best_cv_score=0.7547841273712905
-training_time=0.31084156036376953
-training_accuracy=0.38186813186813184
-training_weighed_f1=0.3836646063359834
-test_accuracy=0.3525641025641026
-test_weighed_percision=0.3975148414803587
-test_weighed_recall=0.3525641025641026
-test_weighed_f1=0.35152650239973027
-
-[gradient_descent]
-training_time=4.275434970855713
-training_accuracy=1.0
-training_weighed_f1=1.0
+best_rate=0.9
+best_schedule=arithmetic
+best_decay=0.001
+best_cv_score=0.9531412586987933
+training_time=1.8559517860412598
+training_accuracy=0.989010989010989
+training_weighed_f1=0.9889962715855574
 test_accuracy=0.9743589743589743
 test_weighed_percision=0.9748545386164023
 test_weighed_recall=0.9743589743589743
 test_weighed_f1=0.9744391025641025
 
+[gradient_descent]
+training_time=3.400009870529175
+training_accuracy=1.0
+training_weighed_f1=1.0
+test_accuracy=0.9871794871794872
+test_weighed_percision=0.9871794871794872
+test_weighed_recall=0.9871794871794872
+test_weighed_f1=0.9871794871794872
+
 [genetic_algorithm]
-training_time=480.92188239097595
-training_accuracy=0.8626373626373627
-training_weighed_f1=0.8643592489604535
-test_accuracy=0.8717948717948718
-test_weighed_percision=0.893877809433365
-test_weighed_recall=0.8717948717948718
-test_weighed_f1=0.8736868810657171
+best_pop_size=300
+best_mut_prob=0.0001
+best_cv_score=0.5214181521941057
+training_time=566.5964331626892
+training_accuracy=0.8131868131868132
+training_weighed_f1=0.8140574902974524
+test_accuracy=0.7628205128205128
+test_weighed_percision=0.7763374222676548
+test_weighed_recall=0.7628205128205128
+test_weighed_f1=0.7658044712943683
 
 [MODEL]
 name=diabetes_presence
 
 [OUTPUT]
-analysis_dir=/home/amandapotts/Documents/git/diabetes_data_analysis/analysis/diabetes_presence/
+analysis_dir=/home/amandapotts/Documents/git/diabetes_data_analysis/main/analysis/diabetes_presence/
 
 [Training]
 num_training_rows=364
