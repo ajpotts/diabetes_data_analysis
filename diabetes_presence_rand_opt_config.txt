@@ -2,35 +2,44 @@
 default=<Section: DEFAULT>
 
 [randomized_hill_climbing]
-best_rate=0.5
-best_cv_score=0.5778654416310147
-training_time=2.1100971698760986
-training_accuracy=0.7445054945054945
-training_weighed_f1=0.7477886521230176
-test_accuracy=0.782051282051282
-test_weighed_percision=0.7906341241072081
-test_weighed_recall=0.782051282051282
-test_weighed_f1=0.7842832197670907
+best_rate=1.1
+best_cv_score=0.7127099222364166
+training_time=2.1565327644348145
+training_accuracy=0.8076923076923077
+training_weighed_f1=0.8087798841851878
+test_accuracy=0.8205128205128205
+test_weighed_percision=0.8205128205128205
+test_weighed_recall=0.8205128205128205
+test_weighed_f1=0.8205128205128205
 
 [simulated_annealing]
-best_rate=0.5
-best_cv_score=0.5941463066936999
-training_time=0.2467803955078125
-training_accuracy=0.5357142857142857
-training_weighed_f1=0.5333923912731858
-test_accuracy=0.5192307692307693
-test_weighed_percision=0.5143681318681319
-test_weighed_recall=0.5192307692307693
-test_weighed_f1=0.5166205456428365
+best_rate=1.0
+best_cv_score=0.7011732782159859
+training_time=0.24000787734985352
+training_accuracy=0.3983516483516483
+training_weighed_f1=0.40338028850361785
+test_accuracy=0.358974358974359
+test_weighed_percision=0.40532177374282635
+test_weighed_recall=0.358974358974359
+test_weighed_f1=0.356866761930053
 
 [gradient_descent]
-training_time=3.2912778854370117
+training_time=3.391019582748413
 training_accuracy=1.0
 training_weighed_f1=1.0
 test_accuracy=0.9743589743589743
 test_weighed_percision=0.9748545386164023
 test_weighed_recall=0.9743589743589743
 test_weighed_f1=0.9744391025641025
+
+[genetic_algorithm]
+training_time=470.4717438220978
+training_accuracy=0.8626373626373627
+training_weighed_f1=0.8643592489604535
+test_accuracy=0.8717948717948718
+test_weighed_percision=0.893877809433365
+test_weighed_recall=0.8717948717948718
+test_weighed_f1=0.8736868810657171
 
 [MODEL]
 name=diabetes_presence
