@@ -9,6 +9,7 @@ import sys
 import time
 import math 
 import mlrose
+import logging
 
 from six import StringIO
 import matplotlib.pyplot as plt
@@ -19,7 +20,7 @@ import numpy as np
 from yellowbrick.model_selection import LearningCurve
 
 from sklearn import metrics 
-from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay, accuracy_score
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, LearningCurveDisplay, ShuffleSplit, learning_curve
 from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from sklearn.svm import SVC
@@ -33,6 +34,7 @@ from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from model_config_parser import ModelConfig
 
 import warnings
+from pickle import NONE
 warnings.filterwarnings("ignore")
 
 NUM_JOBS = -1
@@ -40,7 +42,7 @@ NUM_JOBS = -1
 
 class ModelBuilder(object):
 
-    def __init__(self, X, y, feature_columns, analysis_dir, model_name, model_config_file):
+    def __init__(self, X, y, feature_columns, analysis_dir, model_name, model_config_file, model_out_config="out_config.txt"):
         '''
         Constructor
         '''
@@ -49,6 +51,7 @@ class ModelBuilder(object):
         
         self.analysis_dir = analysis_dir + '/' + model_name + '/'
         self.model_name = model_name
+        self.model_out_config = model_out_config
         
         try:
             os.makedirs(self.analysis_dir, exist_ok=True)
@@ -74,6 +77,12 @@ class ModelBuilder(object):
         
         self.num_training_rows = self.X_train.shape[0]
         self.num_testing_rows = self.X_test.shape[0]
+        
+                # One hot encode target values
+        one_hot = OneHotEncoder()
+
+        self.y_train_hot = one_hot.fit_transform(self.y_train.to_numpy().reshape(-1, 1)).todense()
+        self.y_test_hot = one_hot.transform(self.y_test.to_numpy().reshape(-1, 1)).todense()
     
     def set_config_values(self):
         self.model_config.write_config_value("MODEL", "name", self.model_name)
@@ -83,122 +92,189 @@ class ModelBuilder(object):
     
     def write_config(self):
         self.set_config_values()
-        self.model_config.write(open(self.analysis_dir + "out_config.txt", 'w'), space_around_delimiters=False)
+        self.model_config.write(open(self.model_out_config, 'w'), space_around_delimiters=False)
         
-    def nn_random_hill_climb(self):
-        
-        model_type = "Neural Network"
+    def nn_random_hill_climb_get_best_rate(self):
         
         hidden_nodes = [50, 10]
         activation = 'relu'
-        max_iters = 1000
+        max_iters = 100
         bias = False
         
-        learning_rates = [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
-                                     
-        early_stopping = False
-        clip_max = 10
-        max_attempts = 100
-        restarts = 10
+        learning_rates = [0.1, 0.5]  # [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
 
-        # Initialize neural network object and fit object
-        nn_model2 = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
-                                     algorithm='gradient_descent', max_iters=max_iters, \
-                                     bias=bias, is_classifier=True, learning_rate=0.0001, \
-                                     early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
-                                    curve=True,
-                                     random_state=1)
+        clip_max = 10
+        max_attempts = 100  # 1000
+        restarts = 10
         
-        train_accuracy, test_accuracy, curve = self.mlrose_nn(nn_model2)
+        best_rate = None
+        best_model = None
+        best_cv = None
         
         for rate in learning_rates:
-            print("Starting Random Hill Climb:")
-            # Initialize neural network object and fit object
+            print("Random Hill Climb....")
+         
             print("\n\nrate: " + str(rate))
-            nn_model1 = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
+            model = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
                                      algorithm='random_hill_climb', max_iters=max_iters, \
                                      bias=bias, is_classifier=True, learning_rate=rate, \
                                      early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
                                      restarts=restarts,
                                      curve=True,
                                      random_state=1)
+            
+            model.fit(self.X_train, self.y_train_hot)
         
-            self.mlrose_nn(nn_model1)
+            cv = cross_val_score(model, self.X_train, self.y_train_hot, cv=5, scoring='f1_weighted')
+            cv_score = sum(cv) / 5
+            print("CV : " + str(cv_score))
+            
+            if(best_cv == None or cv_score > best_cv):
+                best_cv = cv_score
+                best_model = model
+                best_rate = rate
+            
+        return best_rate, best_cv, best_model
+    
+    def nn_random_sa_get_best_rate(self):
+        
+        hidden_nodes = [50, 10]
+        activation = 'relu'
+        max_iters = 100
+        bias = False
+        
+        learning_rates = [0.1, 0.5]  # [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
+  
+        clip_max = 10
+        max_attempts = 100  # 1000
+        
+        best_rate = None
+        best_model = None
+        best_cv = None
+        
+        for rate in learning_rates:
+            print("Simulated Annealing....")
 
-        print("\n\nStarting Gradient Descent:")
-        
-        print("\n\nStarting Simulated Annealing:")   
-        for rate in learning_rates: 
             print("\n\nrate: " + str(rate))
-            nn_model3 = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
+            model = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
                                      algorithm='simulated_annealing', max_iters=max_iters, \
                                      bias=bias, is_classifier=True, learning_rate=rate, \
                                      early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
                                     curve=True,
-                                     random_state=1)    
-            self.mlrose_nn(nn_model3) 
+                                     random_state=1)
+            
+            model.fit(self.X_train, self.y_train_hot)
+        
+            cv = cross_val_score(model, self.X_train, self.y_train_hot, cv=5, scoring='f1_weighted')
+            cv_score = sum(cv) / 5
+            print("CV : " + str(cv_score))
+            
+            if(best_cv == None or cv_score > best_cv):
+                best_cv = cv_score
+                best_model = model
+                best_rate = rate
+            
+        return best_rate, best_cv, best_model
+    
+    def nn_random_opt(self):
+        
+        hidden_nodes = [50, 10]
+        activation = 'relu'
+        max_iters = 1000
+        bias = False
+
+        clip_max = 10
+        max_attempts = 100
+        
+        best_hc_rate, best_hc_cv, hc_model = self.nn_random_hill_climb_get_best_rate()
+        
+        self.model_config.write_config_value("randomized_hill_climbing", "best_rate", str(best_hc_rate))
+        self.model_config.write_config_value("randomized_hill_climbing", "best_cv_score", str(best_hc_cv))        
+        
+        train_accuracy, test_accuracy, hc_curve = self.mlrose_nn(hc_model, "randomized_hill_climbing")   
+        
+        best_sa_rate, best_sa_cv, sa_model = self.nn_random_sa_get_best_rate()
+        
+        self.model_config.write_config_value("simulated_annealing", "best_rate", str(best_sa_rate))
+        self.model_config.write_config_value("simulated_annealing", "best_cv_score", str(best_sa_cv))        
+        
+        train_accuracy, test_accuracy, sa_curve = self.mlrose_nn(sa_model, "simulated_annealing")   
+
+        # Initialize neural network object and fit object
+        gradient_descent_model = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
+                                     algorithm='gradient_descent', max_iters=max_iters, \
+                                     bias=bias, is_classifier=True, learning_rate=0.0001, \
+                                     early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
+                                    curve=True,
+                                     random_state=1)
+        
+        train_accuracy, test_accuracy, gradient_descent_curve = self.mlrose_nn(gradient_descent_model, "gradient_descent")
 
         print("\n\nStarting Genetic Algorithm:")  
-        for rate in learning_rates: 
-            print("\n\nrate: " + str(rate))
-            nn_model4 = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
-                                     algorithm='genetic_alg', max_iters=max_iters, \
-                                     bias=bias, is_classifier=True, learning_rate=rate, \
-                                     early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
-                                     curve=True,
-                                     random_state=1) 
-        
-            self.mlrose_nn(nn_model4)             
-        
-            # self.fit_model(nn_model1, model_type, "random_hill_climb")
-        # self.model_config.write_config_value(model_type, "gridsearch_earlystopping_model_num_iterations", str(gridsearch_early_stopping.n_iter_))
-        
-    def mlrose_nn_hill_climbing(self):
-        pass
 
-    def mlrose_nn(self, model):
-        
-        # One hot encode target values
-        one_hot = OneHotEncoder()
+        # ga_model = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
+        #                              algorithm='genetic_alg', max_iters=max_iters, \
+        #                              bias=bias, is_classifier=True,
+        #                              early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
+        #                              curve=True,
+        #                              random_state=1) 
+        #
+        # ga_train_accuracy, test_accuracy, ga_curve = self.mlrose_nn(ga_model,"genetic_algorithm")
 
-        y_train_hot = one_hot.fit_transform(self.y_train.to_numpy().reshape(-1, 1)).todense()
-        y_test_hot = one_hot.transform(self.y_test.to_numpy().reshape(-1, 1)).todense()
-
-        model.fit(self.X_train, y_train_hot)
-        # print(model.fitness_curve)
+        blue_patch = mpatches.Patch(color='blue', label="Simulated Annealing")
+        green_patch = mpatches.Patch(color='green', label="Randomized Hill Climbing")
+        red_patch = mpatches.Patch(color='red', label="Gradient Descent")
+        purple_patch = mpatches.Patch(color='purple', label="Genetic Algorithm")
         
-        from sklearn.metrics import accuracy_score
+        learning_curve_filename = self.analysis_dir + "rand_opt_performance.png"
+          
+        self.clear_plots()                                   
+        ax = plt.gca()
+        plt.plot(sa_curve, color='blue')
+        plt.plot(hc_curve, color='green')       
+        plt.plot(gradient_descent_curve, color='red')       
+        # plt.plot(ga_curve, color='purple')          
+        plt.legend(handles=[blue_patch, green_patch, red_patch, purple_patch], loc="lower right") 
+        plt.xlabel("Iterations")
+        plt.ylabel("Fitness Score")
+        plt.title("Fitness by Number of Iterations for Each Algorithm")
+        # plt.savefig(learning_curve_filename)  
+        plt.show()           
+
+    def mlrose_nn(self, model, model_type):
+
+        start_time = time.time()
+        model.fit(self.X_train, self.y_train_hot)
+        end_time = time.time() - start_time
+        
+        self.model_config.write_config_value(model_type, "training_time", str(end_time))
         
         # Predict labels for train set and assess accuracy
         y_train_pred = model.predict(self.X_train)
         
-        y_train_accuracy = accuracy_score(y_train_hot, y_train_pred)
-        
-        print("Train Accuracy: ")
-        print(y_train_accuracy)
+        y_train_accuracy = accuracy_score(self.y_train_hot, y_train_pred)
+        self.model_config.write_config_value(model_type, "training_accuracy", str(y_train_accuracy))
         
         # F1
-        training_f1 = metrics.f1_score(y_train_hot, y_train_pred, average='macro')
-        print("Traning F1:", str(training_f1))
+        training_f1 = metrics.f1_score(self.y_train_hot, y_train_pred, average='weighted')
+        self.model_config.write_config_value(model_type, "training_weighed_f1", str(training_f1))
         
         # Predict labels for test set and assess accuracy
         y_test_pred = model.predict(self.X_test)
         
-        y_test_accuracy = accuracy_score(y_test_hot, y_test_pred)
+        y_test_accuracy = accuracy_score(self.y_test_hot, y_test_pred)
+        self.model_config.write_config_value(model_type, "test_accuracy", str(y_test_accuracy))
         
-        print("Test Accuracy: ")        
-        print(y_test_accuracy)
-        
-        percision = metrics.precision_score(y_test_hot, y_test_pred, average='macro')
-        print(" Precision:", str(percision))
+        percision = metrics.precision_score(self.y_test_hot, y_test_pred, average='weighted')
+        self.model_config.write_config_value(model_type, "test_weighed_percision", str(percision))
         
         # Model Recall
-        recall = metrics.recall_score(y_test_hot, y_test_pred, average='macro')
-        print(" Recall:", str(recall))
+        recall = metrics.recall_score(self.y_test_hot, y_test_pred, average='weighted')
+        self.model_config.write_config_value(model_type, "test_weighed_recall", str(recall))
         
         # F1
-        f1 = metrics.f1_score(y_test_hot, y_test_pred, average='macro')
-        print(" F1:", str(f1))
+        test_f1 = metrics.f1_score(self.y_test_hot, y_test_pred, average='weighted')
+        self.model_config.write_config_value(model_type, "test_weighed_f1", str(test_f1))
         
         return y_train_accuracy, y_test_accuracy, model.fitness_curve
     

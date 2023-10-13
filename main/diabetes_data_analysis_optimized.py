@@ -27,11 +27,12 @@ def main():
 
     # Get first data set and analyze
     X, y, feature_columns = get_diabetes_presence_data(project_dir, analysis_dir)
+
+    config_file_in = project_dir + '/default_config.txt'    
+    config_file_out = project_dir + '/diabetes_presence_rand_opt_config.txt'
+    model_builder_diabetes_presence = ModelBuilder(X, y, feature_columns, analysis_dir, 'diabetes_presence', config_file_in, model_out_config=config_file_out)
     
-    config_file_diabetes_presence = project_dir + '/diabetes_presence_rand_opt_config.txt'
-    model_builder_diabetes_presence = ModelBuilder(X, y, feature_columns, analysis_dir, 'diabetes_presence', config_file_diabetes_presence)
-    
-    model_builder_diabetes_presence.nn_random_hill_climb()
+    model_builder_diabetes_presence.nn_random_opt()
     model_builder_diabetes_presence.write_config()
 
 
