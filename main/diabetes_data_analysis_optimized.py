@@ -10,10 +10,9 @@ import os
 import sys
 import pathlib
 from pathlib import Path
-import pandas as pd
 import six
 sys.modules['sklearn.externals.six'] = six
-from model_builder import ModelBuilder
+from model_builder_rand_opt import ModelBuilderRandOpt
 
 from diabetes_data_analysis import get_diabetes_presence_data
 
@@ -30,9 +29,10 @@ def main():
 
     config_file_in = project_dir + '/default_config.txt'    
     config_file_out = project_dir + '/diabetes_presence_rand_opt_config.txt'
-    model_builder_diabetes_presence = ModelBuilder(X, y, feature_columns, analysis_dir, 'diabetes_presence', config_file_in, model_out_config=config_file_out)
+    model_builder_diabetes_presence = ModelBuilderRandOpt(X, y, feature_columns, analysis_dir, 'diabetes_presence', config_file_in, model_out_config=config_file_out)
     
     model_builder_diabetes_presence.nn_random_opt()
+    # model_builder_diabetes_presence.nn_random_sa_get_best_rate()
     model_builder_diabetes_presence.write_config()
 
 
