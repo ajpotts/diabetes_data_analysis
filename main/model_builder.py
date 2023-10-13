@@ -101,10 +101,10 @@ class ModelBuilder(object):
         max_iters = 100
         bias = False
         
-        learning_rates = [0.1, 0.5]  # [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
+        learning_rates = [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
 
         clip_max = 10
-        max_attempts = 100  # 1000
+        max_attempts = 1000
         restarts = 10
         
         best_rate = None
@@ -123,7 +123,7 @@ class ModelBuilder(object):
                                      curve=True,
                                      random_state=1)
             
-            model.fit(self.X_train, self.y_train_hot)
+            # model.fit(self.X_train, self.y_train_hot)
         
             cv = cross_val_score(model, self.X_train, self.y_train_hot, cv=5, scoring='f1_weighted')
             cv_score = sum(cv) / 5
@@ -143,10 +143,10 @@ class ModelBuilder(object):
         max_iters = 100
         bias = False
         
-        learning_rates = [0.1, 0.5]  # [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
+        learning_rates = [0.001, 0.01, 0.1, 0.5, 0.7, 0.8, 0.9, 1.0, 1.1]
   
         clip_max = 10
-        max_attempts = 100  # 1000
+        max_attempts = 1000
         
         best_rate = None
         best_model = None
@@ -163,7 +163,7 @@ class ModelBuilder(object):
                                     curve=True,
                                      random_state=1)
             
-            model.fit(self.X_train, self.y_train_hot)
+            # model.fit(self.X_train, self.y_train_hot)
         
             cv = cross_val_score(model, self.X_train, self.y_train_hot, cv=5, scoring='f1_weighted')
             cv_score = sum(cv) / 5
@@ -173,6 +173,8 @@ class ModelBuilder(object):
                 best_cv = cv_score
                 best_model = model
                 best_rate = rate
+                
+        print("BEST CV: " + str(best_cv))
             
         return best_rate, best_cv, best_model
     
@@ -212,14 +214,14 @@ class ModelBuilder(object):
 
         print("\n\nStarting Genetic Algorithm:")  
 
-        # ga_model = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
-        #                              algorithm='genetic_alg', max_iters=max_iters, \
-        #                              bias=bias, is_classifier=True,
-        #                              early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
-        #                              curve=True,
-        #                              random_state=1) 
-        #
-        # ga_train_accuracy, test_accuracy, ga_curve = self.mlrose_nn(ga_model,"genetic_algorithm")
+        ga_model = mlrose.NeuralNetwork(hidden_nodes=hidden_nodes, activation=activation, \
+                                     algorithm='genetic_alg', max_iters=max_iters, \
+                                     bias=bias, is_classifier=True, learning_rate=0.0001, \
+                                     early_stopping=False, clip_max=clip_max, max_attempts=max_attempts, \
+                                     curve=True,
+                                     random_state=1) 
+        
+        ga_train_accuracy, test_accuracy, ga_curve = self.mlrose_nn(ga_model, "genetic_algorithm")
 
         blue_patch = mpatches.Patch(color='blue', label="Simulated Annealing")
         green_patch = mpatches.Patch(color='green', label="Randomized Hill Climbing")
@@ -233,13 +235,13 @@ class ModelBuilder(object):
         plt.plot(sa_curve, color='blue')
         plt.plot(hc_curve, color='green')       
         plt.plot(gradient_descent_curve, color='red')       
-        # plt.plot(ga_curve, color='purple')          
+        plt.plot(ga_curve, color='purple')          
         plt.legend(handles=[blue_patch, green_patch, red_patch, purple_patch], loc="lower right") 
         plt.xlabel("Iterations")
         plt.ylabel("Fitness Score")
         plt.title("Fitness by Number of Iterations for Each Algorithm")
-        # plt.savefig(learning_curve_filename)  
-        plt.show()           
+        plt.savefig(learning_curve_filename)  
+        # plt.show()           
 
     def mlrose_nn(self, model, model_type):
 

@@ -2,29 +2,29 @@
 default=<Section: DEFAULT>
 
 [randomized_hill_climbing]
-best_rate=1.0
-best_cv_score=0.7529842785672447
-training_time=2.5487802028656006
-training_accuracy=0.8708791208791209
-training_weighed_f1=0.8725093974696775
-test_accuracy=0.8910256410256411
-test_weighed_percision=0.9106430539357367
-test_weighed_recall=0.8910256410256411
-test_weighed_f1=0.8926048468830003
+best_rate=1.1
+best_cv_score=0.7127099222364166
+training_time=2.1565327644348145
+training_accuracy=0.8076923076923077
+training_weighed_f1=0.8087798841851878
+test_accuracy=0.8205128205128205
+test_weighed_percision=0.8205128205128205
+test_weighed_recall=0.8205128205128205
+test_weighed_f1=0.8205128205128205
 
 [simulated_annealing]
-best_rate=1.1
-best_cv_score=0.7547841273712905
-training_time=0.31084156036376953
-training_accuracy=0.38186813186813184
-training_weighed_f1=0.3836646063359834
-test_accuracy=0.3525641025641026
-test_weighed_percision=0.3975148414803587
-test_weighed_recall=0.3525641025641026
-test_weighed_f1=0.35152650239973027
+best_rate=1.0
+best_cv_score=0.7011732782159859
+training_time=0.24000787734985352
+training_accuracy=0.3983516483516483
+training_weighed_f1=0.40338028850361785
+test_accuracy=0.358974358974359
+test_weighed_percision=0.40532177374282635
+test_weighed_recall=0.358974358974359
+test_weighed_f1=0.356866761930053
 
 [gradient_descent]
-training_time=4.275434970855713
+training_time=3.391019582748413
 training_accuracy=1.0
 training_weighed_f1=1.0
 test_accuracy=0.9743589743589743
@@ -33,7 +33,7 @@ test_weighed_recall=0.9743589743589743
 test_weighed_f1=0.9744391025641025
 
 [genetic_algorithm]
-training_time=480.92188239097595
+training_time=470.4717438220978
 training_accuracy=0.8626373626373627
 training_weighed_f1=0.8643592489604535
 test_accuracy=0.8717948717948718
