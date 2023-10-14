@@ -4,39 +4,23 @@ Created on Sep 18, 2023
 @author: amandapotts
 '''
 
-import os
-import sys
 import time
-import math 
 import mlrose
-import logging
 
 from six import StringIO
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import pydotplus
-import pandas as pd
 import numpy as np
-from yellowbrick.model_selection import LearningCurve
 
 from sklearn import metrics 
-from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay, accuracy_score
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score, LearningCurveDisplay, ShuffleSplit, learning_curve
-from sklearn.tree import DecisionTreeClassifier, export_graphviz
-from sklearn.svm import SVC
-from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.utils import shuffle
-from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+from sklearn.metrics import  accuracy_score
+from sklearn.model_selection import cross_val_score, learning_curve
+from sklearn.preprocessing import  OneHotEncoder
 from sklearn.pipeline import make_pipeline
 
-from model_config_parser import ModelConfig
 from model_builder import ModelBuilder
 
 import warnings
-from pickle import NONE
 warnings.filterwarnings("ignore")
 
 NUM_JOBS = -1
@@ -321,6 +305,9 @@ class ModelBuilderRandOpt(ModelBuilder):
         
         self.clear_plots()
         pipeline = make_pipeline(model)
+        
+# Learning curve follows this example:
+# https://vitalflux.com/learning-curves-explained-python-sklearn-example/
         
         train_sizes, train_scores, test_scores = learning_curve(estimator=pipeline, X=self.X_train, y=self.y_train_hot,
                                                        cv=10, train_sizes=np.linspace(0.1, 1.0, 10),

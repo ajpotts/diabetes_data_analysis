@@ -41,10 +41,16 @@ And unzip the data into this folder:
 
 
 
-## To Run
+## To Run Diabetes Analysis
 
 > cd main/
 > python3 diabetes_data_analysis.py
+
+## To Run Random Optimization Algorithm Analysis
+
+> cd main/
+> python3 diabetes_data_analysis_optimized.py
+
 
 ## Output
 

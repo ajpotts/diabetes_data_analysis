@@ -3,7 +3,7 @@
 '''
 @author:     Amanda Potts
 
-@deffield    updated: September 2023
+@deffield    updated: October 2023
 '''
 
 import os
@@ -24,7 +24,7 @@ def main():
     project_dir = str(Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute())
     analysis_dir = str(path) + '/analysis'
 
-    # Get first data set and analyze
+    # Get data set and analyze
     X, y, feature_columns = get_diabetes_presence_data(project_dir, analysis_dir)
 
     config_file_in = project_dir + '/default_config.txt'    
@@ -32,7 +32,6 @@ def main():
     model_builder_diabetes_presence = ModelBuilderRandOpt(X, y, feature_columns, analysis_dir, 'diabetes_presence', config_file_in, model_out_config=config_file_out)
     
     model_builder_diabetes_presence.nn_random_opt()
-    # model_builder_diabetes_presence.nn_random_sa_get_best_rate()
     model_builder_diabetes_presence.write_config()
 
 
